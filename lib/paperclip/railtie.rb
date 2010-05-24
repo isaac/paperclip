@@ -4,7 +4,7 @@ module Paperclip
   if defined? Rails::Railtie
     require 'rails'
     class Railtie < Rails::Railtie
-      config.after_initialize do
+      initializer 'paperclip' do |app|
         Paperclip::Railtie.insert
       end
     end
