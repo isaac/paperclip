@@ -37,7 +37,12 @@ require 'paperclip/interpolations'
 require 'paperclip/style'
 require 'paperclip/attachment'
 require 'paperclip/callback_compatability'
-require 'paperclip/railtie'
+File.send :include, Paperclip::Upfile
+if defined? ActiveSupport
+  ActiveSupport.on_load :active_record do
+    include Paperclip
+  end
+end
 if defined?(Rails.root) && Rails.root
   Dir.glob(File.join(File.expand_path(Rails.root), "lib", "paperclip_processors", "*.rb")).each do |processor|
     require processor
@@ -48,7 +53,7 @@ end
 # documentation for Paperclip::ClassMethods for more useful information.
 module Paperclip
 
-  VERSION = "2.3.2.beta2"
+  VERSION = "2.3.2.beta3"
 
   class << self
     # Provides configurability to Paperclip. There are a number of options available, such as:
